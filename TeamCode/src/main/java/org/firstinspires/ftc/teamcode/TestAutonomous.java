@@ -36,18 +36,21 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 //import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.util.ElapsedTime;
+//import com.qualcomm.robotcore.hardware.GyroSensor;
+//import com.qualcomm.robotcore.util.ElapsedTime;
 
+/**
+ * OpMode for testing correct connection and direction of drive motors.
+ * Spins each motor starting with the FL and going clockwise.
+ */
 
-
-@Autonomous(name="TestAutonomous-1", group="Autonomous")
+@Autonomous(name = "Motor Test", group = "Autonomous")
 //@Disabled
 public class TestAutonomous extends LinearOpMode {
 
-    private ElapsedTime runtime = new ElapsedTime();
+    //private ElapsedTime runtime = new ElapsedTime();
 
-    static final double FW_SPEED = 0.5;
+    static final double TEST_SPEED = 0.5;
 
     DcMotor FL, FR, BL, BR;
 
@@ -58,6 +61,11 @@ public class TestAutonomous extends LinearOpMode {
         FR = hardwareMap.dcMotor.get("fr");
         BL = hardwareMap.dcMotor.get("bl");
         BR = hardwareMap.dcMotor.get("br");
+
+        /**
+         * Reverse FR and BR if using all ANDYMARK motors
+         * Reverse FL and BL if using all TETRIX motors
+         */
 
         // FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
@@ -73,41 +81,26 @@ public class TestAutonomous extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
-        //forward(5);
         testMotors();
 
         telemetry.addData("Status", "Complete");
         telemetry.update();
     }
 
-    public void forward(int seconds) throws InterruptedException {
-        if (opModeIsActive()) {
-            FL.setPower(FW_SPEED);
-            FR.setPower(FW_SPEED);
-            BL.setPower(FW_SPEED);
-            BR.setPower(FW_SPEED);
-
-            sleep(seconds * 1000);
-
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-        }
-    }
-
     public void testMotors() throws InterruptedException {
-        FL.setPower(0.5);
-        sleep(1000);
-        FL.setPower(0);
-        FR.setPower(0.5);
-        sleep(1000);
-        FR.setPower(0);
-        BR.setPower(0.5);
-        sleep(1000);
-        BR.setPower(0);
-        BL.setPower(0.5);
-        sleep(1000);
-        BL.setPower(0);
+        if (opModeIsActive()) {
+            FL.setPower(TEST_SPEED);
+            sleep(1000);
+            FL.setPower(0);
+            FR.setPower(TEST_SPEED);
+            sleep(1000);
+            FR.setPower(0);
+            BR.setPower(TEST_SPEED);
+            sleep(1000);
+            BR.setPower(0);
+            BL.setPower(TEST_SPEED);
+            sleep(1000);
+            BL.setPower(0);
+        }
     }
 }
