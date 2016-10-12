@@ -59,7 +59,7 @@ public class KimmyAutonomous extends LinearOpMode {
         BL = hardwareMap.dcMotor.get("bl");
         BR = hardwareMap.dcMotor.get("br");
 
-        FL.setDirection(DcMotor.Direction.REVERSE);
+        //FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
 
         idle();
