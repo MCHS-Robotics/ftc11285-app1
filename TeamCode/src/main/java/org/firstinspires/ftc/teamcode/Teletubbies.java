@@ -59,7 +59,7 @@ public class Teletubbies extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor FR, FL, BL, BR;
+    DcMotor FR, FL, BL, BR, scoop;
     double x, y, x2;
     Servo servoRB;
     double servoPos = 0.5;
@@ -73,9 +73,10 @@ public class Teletubbies extends LinearOpMode {
         FL = hardwareMap.dcMotor.get("fl");
         BL = hardwareMap.dcMotor.get("bl");
         BR = hardwareMap.dcMotor.get("br");
+        scoop = hardwareMap.dcMotor.get("scoop");
         servoRB = hardwareMap.servo.get("servoRB");
 
-        FL.setDirection(DcMotor.Direction.REVERSE);
+        //FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
@@ -87,6 +88,12 @@ public class Teletubbies extends LinearOpMode {
             x = gamepad1.left_stick_x;
             y = -gamepad1.left_stick_y;
 
+            if (gamepad1.a) {
+                scoop.setPower(0.5);
+            }
+            else {
+                scoop.setPower(0);
+            }
             //Bryan was here
 
             x2 = gamepad1.right_stick_x;
@@ -95,14 +102,16 @@ public class Teletubbies extends LinearOpMode {
             BL.setPower((y-x)*.5 + x2/2);
             FL.setPower((y+x)*.5 + x2/2);
             BR.setPower((y+x)*.5 - x2/2);
-            servoRB.setPosition(servoPos);
+            //servoRB.setPosition(servoPos);
 
             if (gamepad1.left_bumper) {
-                servoPos -= 0.05;
+                //servoPos -= 0.05;
+                servoRB.setPosition(Servo.MIN_POSITION);
             }
 
             if (gamepad1.right_bumper) {
-                servoPos += 0.05;
+                //servoPos += 0.05;
+                servoRB.setPosition(Servo.MAX_POSITION-.1);
             }
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
