@@ -73,7 +73,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Gyro", group="Pushbot")
+@Autonomous(name="TeletubbiesAutoV1", group="Autonomous")
 //@Disabled
 public class TeletubbiesAutoV1 extends LinearOpMode {
     DcMotor FL, FR, BR, BL;
