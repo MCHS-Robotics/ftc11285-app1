@@ -53,7 +53,9 @@ public class JayAutonomous extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        FL = hardware.Map.dc
+        FL = hardwareMap.dcMotor.get("fl")
+        FR = hardwareMap.dcMotor.get("fr")
+
     }
 
     public void runOpMode() throws InterruptedException {
