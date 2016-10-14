@@ -48,6 +48,7 @@ public class KimmyAutonomous extends LinearOpMode {
 
     static final double FW_SPEED = 0.5;
     static final double TL_SPEED = 0.16;
+    static final double TR_SPEED = 0.16;
 
     DcMotor FL, FR, BL, BR;
 
@@ -73,8 +74,11 @@ public class KimmyAutonomous extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
-        forward(2000);
+        forward(571);
         turnLeft(1000);
+        forward(571);
+        turnRight(1000);
+        forward(2284);
 
         telemetry.addData("Status", "Complete");
         telemetry.update();
@@ -116,6 +120,23 @@ public class KimmyAutonomous extends LinearOpMode {
 
         }
 
+
+    }
+    public void turnRight(int milliseconds) throws InterruptedException {
+        if (opModeIsActive()) {
+            FL.setPower(TR_SPEED);
+            FR.setPower(-TR_SPEED);
+            BL.setPower(TR_SPEED);
+            BR.setPower(-TR_SPEED);
+
+            sleep(milliseconds);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+
+        }
 
     }
 }
