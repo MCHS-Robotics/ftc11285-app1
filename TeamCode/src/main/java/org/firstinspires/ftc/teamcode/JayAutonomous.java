@@ -44,9 +44,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //@Disabled
 public class JayAutonomous extends LinearOpMode {
 
+    private ElapsedTime runtime = new ElapsedTime();
 
+    static final double FW_SPEED = 0.5;
+
+    DcMotor FL, FR, BL, BR;
 
     @Override
+    public void runOpMode() throws InterruptedException {
+
+        FL = hardware.Map.dc
+    }
+
     public void runOpMode() throws InterruptedException {
         
 
