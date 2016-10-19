@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -47,10 +48,17 @@ public class KimmyAutonomous extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double FW_SPEED = 0.5;
+    static final double BW_SPEED = -0.5;
     static final double TL_SPEED = 0.16;
     static final double TR_SPEED = 0.16;
+    static final double circumferenceW = 4 * Math.PI;
+    static final double stepValue = 10;
+    static double encoderTarget = 0;
+    static final double diameterRobot = 10;
+    static final double degrees = circumferenceW * 360 / Math.PI / diameterRobot;
 
     DcMotor FL, FR, BL, BR;
+    Servo arm;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -59,6 +67,7 @@ public class KimmyAutonomous extends LinearOpMode {
         FR = hardwareMap.dcMotor.get("fr");
         BL = hardwareMap.dcMotor.get("bl");
         BR = hardwareMap.dcMotor.get("br");
+        arm = hardwareMap.servo.get("servoRB");
 
         //FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
@@ -74,11 +83,12 @@ public class KimmyAutonomous extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
+        arm.setPosition(arm.MAX_POSITION - .3);
         forward(571);
         turnLeft(1000);
         forward(571);
         turnRight(1000);
-        forward(2284);
+        forward(4568);
 
         telemetry.addData("Status", "Complete");
         telemetry.update();
@@ -138,5 +148,80 @@ public class KimmyAutonomous extends LinearOpMode {
 
         }
 
+    }
+    public void backwards (int milliseconds) throws InterruptedException {
+        if (opModeIsActive()) {
+            FL.setPower(BW_SPEED);
+            FR.setPower(BW_SPEED);
+            BL.setPower(BW_SPEED);
+            BR.setPower(BW_SPEED);
+
+            sleep(milliseconds);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+        }
+    }
+    public void forward2 (int distance) throws InterruptedException {
+        if (opModeIsActive()) {
+            encoderTarget = (distance / circumferenceW) * stepValue;
+            while (FL.getCurrentPosition() < encoderTarget) {
+                FL.setPower(FW_SPEED);
+                FR.setPower(FW_SPEED);
+                BL.setPower(FW_SPEED);
+                BR.setPower(FW_SPEED);
+            }
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+        }
+    }
+    public void backward2 (int distance) throws InterruptedException {
+        if (opModeIsActive()) {
+            encoderTarget = (distance / circumferenceW) * stepValue;
+            while (FL.getCurrentPosition() < encoderTarget) {
+                FL.setPower(BW_SPEED);
+                FR.setPower(BW_SPEED);
+                BL.setPower(BW_SPEED);
+                BR.setPower(BW_SPEED);
+            }
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+        }
+    }
+    public void turnLeft2 (int degree) throws InterruptedException {
+        if (opModeIsActive()) {
+            encoderTarget = (degree / circumferenceW) * stepValue/degrees;
+            while (FL.getCurrentPosition() < encoderTarget) {
+                FL.setPower(BW_SPEED);
+                FR.setPower(FW_SPEED);
+                BL.setPower(BW_SPEED);
+                BR.setPower(FW_SPEED);
+            }
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+        }
+    }
+    public void turnRight2 (int degree) throws InterruptedException {
+        if (opModeIsActive()) {
+            encoderTarget = (degree / circumferenceW) * stepValue/degrees;
+            while (FL.getCurrentPosition() < encoderTarget) {
+                FL.setPower(FW_SPEED);
+                FR.setPower(BW_SPEED);
+                BL.setPower(FW_SPEED);
+                BR.setPower(BW_SPEED);
+            }
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+        }
     }
 }
