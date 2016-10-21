@@ -52,10 +52,11 @@ public class KimmyAutonomous extends LinearOpMode {
     static final double TL_SPEED = 0.16;
     static final double TR_SPEED = 0.16;
     static final double circumferenceW = 4 * Math.PI;
-    static final double stepValue = 10;
+    static final double stepValue = 140;
     static double encoderTarget = 0;
-    static final double diameterRobot = 10;
+    static final double diameterRobot = 20.8;
     static final double degrees = circumferenceW * 360 / Math.PI / diameterRobot;
+    static final double rad2 = Math.sqrt(2);
 
     DcMotor FL, FR, BL, BR;
     Servo arm;
@@ -71,6 +72,7 @@ public class KimmyAutonomous extends LinearOpMode {
 
         //FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
+        FL.setDirection(DcMotor.Direction.REVERSE);
 
         idle();
 
@@ -83,7 +85,9 @@ public class KimmyAutonomous extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
-        arm.setPosition(arm.MAX_POSITION - .3);
+        arm.setPosition(arm.MAX_POSITION - .25);
+        arm.setPosition(arm.MIN_POSITION);
+        forward2(2);
         forward(571);
         turnLeft(1000);
         forward(571);
@@ -166,7 +170,7 @@ public class KimmyAutonomous extends LinearOpMode {
     }
     public void forward2 (int distance) throws InterruptedException {
         if (opModeIsActive()) {
-            encoderTarget = (distance / circumferenceW) * stepValue;
+            encoderTarget = (distance / circumferenceW) * stepValue * rad2;
             while (FL.getCurrentPosition() < encoderTarget) {
                 FL.setPower(FW_SPEED);
                 FR.setPower(FW_SPEED);
@@ -181,7 +185,7 @@ public class KimmyAutonomous extends LinearOpMode {
     }
     public void backward2 (int distance) throws InterruptedException {
         if (opModeIsActive()) {
-            encoderTarget = (distance / circumferenceW) * stepValue;
+            encoderTarget = (distance / circumferenceW) * stepValue * rad2;
             while (FL.getCurrentPosition() < encoderTarget) {
                 FL.setPower(BW_SPEED);
                 FR.setPower(BW_SPEED);

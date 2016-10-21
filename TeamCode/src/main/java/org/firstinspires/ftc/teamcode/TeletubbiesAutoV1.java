@@ -97,7 +97,7 @@ public class TeletubbiesAutoV1 extends LinearOpMode {
     public void setDistance(DcMotor a, int distance){
         a.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         a.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        a.setTargetPosition(distance);
+        a.setTargetPosition(Math.round(distance * 7.878f));
     }
     public void forward(int distance, double power){
         setDistance(FR, distance);

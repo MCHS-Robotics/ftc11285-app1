@@ -78,7 +78,7 @@ public class Teletubbies extends LinearOpMode {
 
         //FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
-
+        FL.setDirection(DcMotor.Direction.REVERSE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -94,7 +94,7 @@ public class Teletubbies extends LinearOpMode {
             else {
                 scoop.setPower(0);
             }
-            //Bryan was here
+
 
             x2 = gamepad1.right_stick_x;
 
@@ -106,13 +106,16 @@ public class Teletubbies extends LinearOpMode {
 
             if (gamepad1.left_bumper) {
                 //servoPos -= 0.05;
+                //telemetry.addData("right bumper is pressed","");
                 servoRB.setPosition(Servo.MIN_POSITION);
             }
 
             if (gamepad1.right_bumper) {
                 //servoPos += 0.05;
-                servoRB.setPosition(Servo.MAX_POSITION-.1);
+                servoRB.setPosition(Servo.MAX_POSITION-.25);
+                //telemetry.addData("right bumper is pressed","");
             }
+            //telemetry.update();
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
