@@ -61,8 +61,9 @@ public class Teletubbies extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     DcMotor FR, FL, BL, BR, scoop;
     double x, y, x2;
-    Servo servoRB;
+    Servo servoR,servoL;
     double servoPos = 0.5;
+    int servoTime = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -74,7 +75,11 @@ public class Teletubbies extends LinearOpMode {
         BL = hardwareMap.dcMotor.get("bl");
         BR = hardwareMap.dcMotor.get("br");
         scoop = hardwareMap.dcMotor.get("scoop");
-        servoRB = hardwareMap.servo.get("servoRB");
+        servoR = hardwareMap.servo.get("servoR");
+        servoL = hardwareMap.servo.get("servoL");
+
+        servoR.setPosition(Servo.MIN_POSITION);
+        servoL.setPosition(Servo.MAX_POSITION-.25);
 
         //FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
@@ -104,20 +109,27 @@ public class Teletubbies extends LinearOpMode {
             BR.setPower((y+x)*.5 - x2/2);
             //servoRB.setPosition(servoPos);
 
-            if (gamepad1.left_bumper) {
-                //servoPos -= 0.05;
-                //telemetry.addData("right bumper is pressed","");
-                servoRB.setPosition(Servo.MIN_POSITION);
+            if (gamepad1.left_bumper && servoTime <=0) {
+                servoTime = 2000;
+               Switch(servoL);
             }
 
-            if (gamepad1.right_bumper) {
-                //servoPos += 0.05;
-                servoRB.setPosition(Servo.MAX_POSITION-.25);
-                //telemetry.addData("right bumper is pressed","");
+            if (gamepad1.right_bumper && servoTime <=0) {
+               Switch(servoR);
+                servoTime = 2000;
             }
             //telemetry.update();
-
+            if(servoTime > 0)
+            servoTime--;
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
+        }
+    }
+
+    public static void Switch(Servo servo) {
+        if (servo.getPosition() == servo.MIN_POSITION) {
+            servo.setPosition(Servo.MAX_POSITION-.25);
+        }else if (servo.getPosition() == Servo.MAX_POSITION-.25){
+            servo.setPosition(Servo.MIN_POSITION);
         }
     }
 
