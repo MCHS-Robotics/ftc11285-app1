@@ -82,22 +82,22 @@ public class TeletubbiesAutoV1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        FR = hardwareMap.dcMotor.get("motor_1");
-        FL = hardwareMap.dcMotor.get("motor_2");
-        BL = hardwareMap.dcMotor.get("motor_3");
-        BR = hardwareMap.dcMotor.get("motor_4");
+        FR = hardwareMap.dcMotor.get("fr");
+        FL = hardwareMap.dcMotor.get("fl");
+        BL = hardwareMap.dcMotor.get("bl");
+        BR = hardwareMap.dcMotor.get("br");
 
         BL.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
 
-        forward(200, 0.5);
-        turn(50, 0.5);
+       forward(12, 0.5);
+        //turn(50, 0.5);
     }
     public void setDistance(DcMotor a, int distance){
         a.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         a.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        a.setTargetPosition(distance);
+        a.setTargetPosition(Math.round(distance * 7.878f));
     }
     public void forward(int distance, double power){
         setDistance(FR, distance);
@@ -119,6 +119,7 @@ public class TeletubbiesAutoV1 extends LinearOpMode {
         FL.setPower(-power);
         BL.setPower(-power);
         BR.setPower(power);
+
 
     }
     public void hitBeacon(){

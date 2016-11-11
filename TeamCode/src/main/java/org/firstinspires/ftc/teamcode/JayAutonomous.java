@@ -33,24 +33,20 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-//import com.qualcomm.robotcore.hardware.GyroSensor;
-//import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * OpMode for testing correct connection and direction of drive motors.
- * Spins each motor starting with the FL and going clockwise.
- */
 
-@Autonomous(name = "Motor Test", group = "Autonomous")
-//@Disabled
-public class TestAutonomous extends LinearOpMode {
 
-    //private ElapsedTime runtime = new ElapsedTime();
+@Autonomous(name="JayAutonomous v1", group="11285")
+@Disabled
+public class JayAutonomous extends LinearOpMode {
 
-    static final double TEST_SPEED = 0.5;
+    private ElapsedTime runtime = new ElapsedTime();
+
+    static final double FW_SPEED = 0.5;
 
     DcMotor FL, FR, BL, BR;
 
@@ -59,48 +55,7 @@ public class TestAutonomous extends LinearOpMode {
 
         FL = hardwareMap.dcMotor.get("fl");
         FR = hardwareMap.dcMotor.get("fr");
-        BL = hardwareMap.dcMotor.get("bl");
-        BR = hardwareMap.dcMotor.get("br");
 
-        /**
-         * Reverse FL and BL if using all ANDYMARK motors
-         * Reverse FR and BR if using all TETRIX motors
-         */
-
-        FL.setDirection(DcMotor.Direction.REVERSE);
-        BL.setDirection(DcMotor.Direction.REVERSE);
-
-        idle();
-
-        telemetry.addData("Status", "Initializing");
-        telemetry.update();
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-
-        telemetry.addData("Status", "Running");
-        telemetry.update();
-
-        testMotors();
-
-        telemetry.addData("Status", "Complete");
-        telemetry.update();
     }
 
-    public void testMotors() throws InterruptedException {
-        if (opModeIsActive()) {
-            FL.setPower(TEST_SPEED);
-            sleep(1000);
-            FL.setPower(0);
-            FR.setPower(TEST_SPEED);
-            sleep(1000);
-            FR.setPower(0);
-            BR.setPower(TEST_SPEED);
-            sleep(1000);
-            BR.setPower(0);
-            BL.setPower(TEST_SPEED);
-            sleep(1000);
-            BL.setPower(0);
-        }
-    }
 }
