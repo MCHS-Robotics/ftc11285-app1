@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -41,7 +41,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous(name="JayAutonomous v1", group="11285")
-//@Disabled
+@Disabled
 public class JayAutonomous extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -53,18 +53,9 @@ public class JayAutonomous extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        FL = hardwareMap.dcMotor.get("fl")
-        FR = hardwareMap.dcMotor.get("fr")
+        FL = hardwareMap.dcMotor.get("fl");
+        FR = hardwareMap.dcMotor.get("fr");
 
     }
-
-    public void runOpMode() throws InterruptedException {
-        
-
-
-
-    }
-
-
 
 }
