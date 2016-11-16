@@ -63,11 +63,11 @@ public class TestAutonomous extends LinearOpMode {
         BR = hardwareMap.dcMotor.get("br");
 
         /**
-         * Reverse FR and BR if using all ANDYMARK motors
-         * Reverse FL and BL if using all TETRIX motors
+         * Reverse FL and BL if using all ANDYMARK motors
+         * Reverse FR and BR if using all TETRIX motors
          */
 
-        // FL.setDirection(DcMotor.Direction.REVERSE);
+        FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
 
         idle();
