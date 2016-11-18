@@ -60,10 +60,11 @@ public class Teletubbies extends LinearOpMode {
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
     DcMotor FR, FL, BL, BR, scoop;
-    double x, y, x2;
+    double x, y, x2, speed;
     Servo servoR,servoL;
     double servoPos = 0.5;
     int servoTime = 0;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -93,22 +94,32 @@ public class Teletubbies extends LinearOpMode {
             x = gamepad1.left_stick_x;
             y = -gamepad1.left_stick_y;
 
-            if (gamepad1.a) {
-                scoop.setPower(0.5);
-            }
-            else {
-                scoop.setPower(0);
+            /*MOVEMENT*/
+            if(gamepad1.b){
+                if(speed == 1){
+                    speed = .5;
+                }
+                else{
+                    speed = 1;
+                }
             }
 
+            if(gamepad1.dpad_up && speed < 1){
+                speed += .001;
+            }
+
+            if(gamepad1.dpad_down && speed > 0){
+                speed -= .001;
+            }
 
             x2 = gamepad1.right_stick_x;
 
-            FR.setPower((y-x)*.5 - x2/2);
-            BL.setPower((y-x)*.5 + x2/2);
-            FL.setPower((y+x)*.5 + x2/2);
-            BR.setPower((y+x)*.5 - x2/2);
-            //servoRB.setPosition(servoPos);
+            FR.setPower((y-x)*.5 * speed - x2/2 * speed);
+            BL.setPower((y-x)*.5 * speed + x2/2 * speed);
+            FL.setPower((y+x)*.5 * speed + x2/2 * speed);
+            BR.setPower((y+x)*.5 * speed - x2/2 * speed);
 
+            /*ARMS*/
             if (gamepad1.left_bumper && servoTime <=0) {
                 servoTime = 2000;
                Switch(servoL);
@@ -118,9 +129,26 @@ public class Teletubbies extends LinearOpMode {
                Switch(servoR);
                 servoTime = 2000;
             }
-            //telemetry.update();
-            if(servoTime > 0)
-            servoTime--;
+
+            if(servoTime > 0) {
+                servoTime--;
+            }
+
+            /*SCOOP*/
+            if(gamepad1.left_trigger > .3){
+                scoop.setPower(.3);
+
+            }
+
+            if(gamepad1.right_trigger > .3){
+                scoop.setPower(-.3);
+
+            }
+
+            if(gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
+                scoop.setPower(0);
+
+            }
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
